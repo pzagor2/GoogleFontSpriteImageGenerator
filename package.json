@@ -9,8 +9,6 @@
   "dependencies": {
      "express": ">= 1.2.0",
      "ejs": "~1.0.0",
-     "phantomjs": "~1.9.7-5",
-     "webshot":"0.15.3",
      "body-parser":"latest",
      "opener": "*"
    },
