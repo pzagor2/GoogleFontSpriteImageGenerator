@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Google font generator</title>
+	<style type="text/css">
+		li {
+			height: 40px;
+			font-size: 25px;
+			padding: 0px;
+			margin: 0px;
+			line-height: 40px;
+			text-align: left;
+			vertical-align: middle;
+
+		}
+		ul
+		{
+			list-style-type: none;
+			padding: 0px;
+			margin: 0px;
+			width: 400px;
+		}
+		#result {
+			display: none;
+			font-size: 30px;
+			color: blue;
+		}
+
+	</style>
+</head>
+<body id="home">
+	<div id="result">Image is generated.. checkout file out.png in your project folder.. Also check console for eny errors!!!!!!</div>
+	<ul id="fonts"></ul>
+	
+
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/webfont/1.5.6/webfont.js"></script>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+		<script type="text/javascript">
+			$(function() {
+				$.get("https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyBYakj-At7wFeLz-KSQk48dWemQzodB0IA", function(data) {
+					var familyesArray = [];
+					processLargeArrayAsync(data.items, function(item, index, array) {
+						console.log("loading chink")
+						$("#fonts").append("<li style='font-family:" + item.family + "'>" + item.family + "</li>");
+						familyesArray.push(item.family);
+						loadFonts();
+					}, 100, window, function() {
+						console.log("finish");
+						//finish callback
+						setTimeout(function() {
+							html2canvas($("#fonts").get(), {
+								onrendered: function(canvas) {
+									console.log("Image generated");
+									console.log(canvas.toDataURL());
+									$.ajax({
+										url: '/finish',
+										type: 'POST',
+										contentType: 'application/json',
+										data: JSON.stringify({
+											image: canvas.toDataURL()
+										}),
+										success: function(response) {
+											console.log(response);
+											$("#result").show();
+
+										}
+									});
+								},
+								width: 400
+							});
+						}, 1000);
+					});
+
+					function loadFonts() {
+						WebFont.load({
+							google: {
+								families: familyesArray
+							},
+							active: function() {}
+						});
+						familyesArray = [];
+					}
+
+					function processLargeArrayAsync(array, fn, chunk, context, finishCallbck) {
+						context = context || window;
+						chunk = chunk || 100;
+						var index = 0;
+
+						function doChunk() {
+							var cnt = chunk;
+							while (cnt-- && index < array.length) {
+								// callback called with args (value, index, array)
+								fn.call(context, array[index], index, array);
+								++index;
+							}
+							if (index < array.length) {
+								// set Timeout for async iteration
+								setTimeout(doChunk, 2000);
+							} else {
+								finishCallbck();
+							}
+						}
+						doChunk();
+					}
+				});
+			});
+</script>
+</body>
+</html>
