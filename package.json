@@ -10,7 +10,9 @@
      "express": ">= 1.2.0",
      "ejs": "~1.0.0",
      "body-parser":"latest",
-     "opener": "*"
+     "opener": "*",
+     "optimist":"~0.6.1",
+     "phantom" : "~0.7.2"
    },
   "author": "Primoz",
   "license": "ISC"
