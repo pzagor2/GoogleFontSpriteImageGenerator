@@ -35,7 +35,7 @@
 		<script src="//ajax.googleapis.com/ajax/libs/webfont/1.5.6/webfont.js"></script>
 		<script type="text/javascript">
 			$(function() {
-				$.get("https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyBYakj-At7wFeLz-KSQk48dWemQzodB0IA", function(data) {
+				$.get("https://www.googleapis.com/webfonts/v1/webfonts?key=<%= googleAPIKey %>", function(data) {
 					var familyesArray = [];
 					processLargeArrayAsync(data.items, function(item, index, array) {
 						console.log("loading chunk")

@@ -12,5 +12,6 @@ generator.getImage({
 		lineHeigth: "40px",
 		fontSize: "25px",
 		width: "400px"
-	}
+	},
+	googleAPIKey:""
 });

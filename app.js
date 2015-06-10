@@ -12,7 +12,8 @@ var config = {
 		fontSize: "25px",
 		width: "400px"
 	},
-	callback: null
+	callback: null,
+	googleAPIKey:""
 };
 
 /**
@@ -27,7 +28,11 @@ function startServer() {
 	//Main page render entry point
 	app.get('/', function(req, res) {
 		var renderFile = 'generator_phantom.html';
-		res.render(renderFile, config.options);
+
+		var params = config.options;
+		params.googleAPIKey = config.googleAPIKey;
+
+		res.render(renderFile, params);
 	});
 	//start server
 	expressServer = app.listen(process.env.PORT || config.port);
@@ -39,7 +44,7 @@ function startServer() {
  * Usses phantomjs to create screenshot of the webpage
  */
 function takeScreenShot(url, callback) {
-
+	console.log("Loading web page ......");
 	phantom.create("--ignore-ssl-errors=yes", "--ssl-protocol=any", function(ph) {
 		ph.createPage(function(page) {
 			page.set('onLoadStarted', function() {});
@@ -50,19 +55,26 @@ function takeScreenShot(url, callback) {
 					page.renderBase64('PNG', callback);
 				}
 			});
-			page.open(pageUrl, function(status) {
+			page.open(url, function(status) {
 
 			});
 		});
 	});
 }
 
+function validateParameters(parms) {
+	if (!parms.googleAPIKey || !(typeof parms.googleAPIKey == 'string' || parms.googleAPIKey instanceof String) || parms.googleAPIKey.length <= 0) {
+		throw "Must supplay googleAPIKey";
+	}
+}
+
 /**
  * Async returs image encoded as base64 string
  */
 var getImage = function(_params) {
+	validateParameters(_params);
 	//merge configs
-	config = _.defaults(config, _params.config);
+	config = _.defaults(_params, config);
 	//start basic express server using config.port
 	startServer();
 	//actually take screenshot with phantomjs

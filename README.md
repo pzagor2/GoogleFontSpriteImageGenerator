@@ -8,10 +8,12 @@ Install with: npm install googlefonts-sprite-generator
 
 This module uses phantomjs http://phantomjs.org/, make sure that is accessable in your path.
 
+And you will need API key https://developers.google.com/fonts/docs/developer_api#Auth
+
 ### Example usage
 
 ```javascript
-var generator = require("googlefonts-sprite-generator");
+var generator = require("./app.js");
 
 generator.getImage({
 	callback: function(base64Data) {
@@ -25,7 +27,8 @@ generator.getImage({
 		lineHeigth: "40px",
 		fontSize: "25px",
 		width: "400px"
-	}
+	},
+	googleAPIKey:"" //You need to replace this with your api key
 });
 ```
 
