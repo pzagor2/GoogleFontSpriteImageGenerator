@@ -1,19 +1,28 @@
 {
-  "name": "google-font-image-generator",
+  "name": "googlefonts-sprite-generator",
   "version": "1.0.0",
-  "description": "",
+  "description": "This module helps generate sprite image for Google Fonts Developer API",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-     "express": ">= 1.2.0",
-     "ejs": "~1.0.0",
-     "body-parser":"latest",
-     "opener": "*",
-     "optimist":"~0.6.1",
-     "phantom" : "~0.7.2"
-   },
-  "author": "Primoz",
-  "license": "ISC"
+    "express": ">= 1.2.0",
+    "ejs": "~2.3.1",
+    "phantom": "~0.7.2",
+    "lodash": "~3.9.3"
+  },
+  "author": "Primoz Zagoricnik <pzagor2@gmail.com>",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pzagor2/GoogleFontSpriteImageGenerator"
+  },
+  "keywords": [
+    "google",
+    "fonts",
+    "sprite",
+    "image"
+  ],
+  "private": false
 }

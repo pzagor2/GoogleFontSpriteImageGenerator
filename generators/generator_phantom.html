@@ -5,11 +5,11 @@
 	<title>Google font generator</title>
 	<style type="text/css">
 		li {
-			height: 40px;
-			font-size: 25px;
+			height: <%= lineHeigth %>;
+			font-size: <%= fontSize %>;
 			padding: 0px;
 			margin: 0px;
-			line-height: 40px;
+			line-height: <%= lineHeigth %>;
 			text-align: left;
 			vertical-align: middle;
 
@@ -19,12 +19,7 @@
 			list-style-type: none;
 			padding: 0px;
 			margin: 0px;
-			width: 400px;
-		}
-		#result {
-			display: none;
-			font-size: 30px;
-			color: blue;
+			width: <%= width %>;
 		}
 		body {
 			margin: 0px;
