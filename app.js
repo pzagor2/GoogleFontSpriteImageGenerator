@@ -13,7 +13,7 @@ var config = {
 		width: "400px"
 	},
 	callback: null,
-	googleAPIKey:""
+	googleAPIKey: ""
 };
 
 /**
@@ -50,10 +50,13 @@ function takeScreenShot(url, callback) {
 			page.set('onLoadStarted', function() {});
 			page.set('onLoadFinished', function() {});
 			page.set('onCallback', function(data) {
-				if (data.loadingFinish) {
-					console.log("Taking SS");
-					page.renderBase64('PNG', callback);
-				}
+				setTimeout(function() {
+					if (data.loadingFinish) {
+						console.log("Taking SS");
+						page.renderBase64('PNG', callback);
+					}
+				}, 5000); //wait some more time for extra mesure
+
 			});
 			page.open(url, function(status) {
 
