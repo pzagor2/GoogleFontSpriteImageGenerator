@@ -13,7 +13,7 @@ And you will need API key https://developers.google.com/fonts/docs/developer_api
 ### Example usage
 
 ```javascript
-var generator = require("./app.js");
+var generator = require("googlefonts-sprite-generator");
 
 generator.getImage({
 	callback: function(base64Data) {
