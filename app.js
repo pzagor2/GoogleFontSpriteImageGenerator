@@ -45,7 +45,7 @@ function startServer() {
  */
 function takeScreenShot(url, callback) {
 	console.log("Loading web page ......");
-	phantom.create("--ignore-ssl-errors=yes", "--ssl-protocol=any", function(ph) {
+	phantom.create("--ignore-ssl-errors=yes", "--ssl-protocol=any", "--web-security=no", function(ph) {
 		ph.createPage(function(page) {
 			page.set('onLoadStarted', function() {});
 			page.set('onLoadFinished', function() {});
