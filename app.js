@@ -1,24 +1,28 @@
 var express = require('express');
 var _ = require('lodash');
 var path = require('path');
-var phantom = require('phantom');
+var puppeteer = require('puppeteer');
 
 var expressServer;
 //Default options
 var config = {
 	port: 1337,
 	options: {
-		lineHeigth: "40px",
+		lineHeight: "40px",
 		fontSize: "25px",
-		width: "400px"
+		width: "400px",
+		viewport: {
+			width: 400,
+			height: 800
+		}
 	},
 	callback: null,
 	googleAPIKey: ""
 };
 
 /**
- * Start basic express server with ejs support, witch loads generator_phantom.html on / URL
- */
+* Start basic express server with ejs support, witch loads generator_phantom.html on / URL
+*/
 function startServer() {
 	//Set up express
 	var app = express();
@@ -28,41 +32,44 @@ function startServer() {
 	//Main page render entry point
 	app.get('/', function(req, res) {
 		var renderFile = 'generator_phantom.html';
-
+		
 		var params = config.options;
 		params.googleAPIKey = config.googleAPIKey;
-
+		
 		res.render(renderFile, params);
 	});
 	//start server
 	expressServer = app.listen(process.env.PORT || config.port);
 	console.log("Running server on port: " + config.port);
-
+	
 }
 
-/**
- * Usses phantomjs to create screenshot of the webpage
- */
-function takeScreenShot(url, callback) {
-	console.log("Loading web page ......");
-	phantom.create("--ignore-ssl-errors=yes", "--ssl-protocol=any", "--web-security=no", function(ph) {
-		ph.createPage(function(page) {
-			page.set('onLoadStarted', function() {});
-			page.set('onLoadFinished', function() {});
-			page.set('onCallback', function(data) {
-				setTimeout(function() {
-					if (data.loadingFinish) {
-						console.log("Taking SS");
-						page.renderBase64('PNG', callback);
-					}
-				}, 5000); //wait some more time for extra mesure
-
+function takeScreenShotPuppeteer(url, callback) {
+	puppeteer.launch({ headless: true }).then(browser => {
+		browser.newPage()
+		.then(page => {
+			page.goto(url);
+			page.on('console', msg => {
+				console.log('PAGE LOG:', msg.text());
+				if (msg.text().startsWith('takeScreenshot')) {
+					page.setViewport({
+						width: config.options.viewport.width,
+						height: config.options.viewport.height
+					});
+					page.screenshot({
+						fullPage: true, 
+						omitBackground: true
+					})
+					.then(buffer => {
+						browser.close();
+						callback(buffer);
+					});
+				}
 			});
-			page.open(url, function(status) {
-
-			});
-		});
+		})
 	});
+	
+	
 }
 
 function validateParameters(parms) {
@@ -72,21 +79,21 @@ function validateParameters(parms) {
 }
 
 /**
- * Async returs image encoded as base64 string
- */
+* Async returs image encoded as base64 string
+*/
 var getImage = function(_params) {
 	validateParameters(_params);
 	//merge configs
-	config = _.defaults(_params, config);
+	config = _.merge(config, _params);
 	//start basic express server using config.port
 	startServer();
 	//actually take screenshot with phantomjs
 	var pageUrl = "http://localhost:" + config.port;
-	takeScreenShot(pageUrl, function(imageString) {
+	takeScreenShotPuppeteer(pageUrl, function(imageString) {
 		expressServer.close();
 		_params.callback(imageString);
 	});
-
+	
 };
 //Public stuff
 var bootstrap = {

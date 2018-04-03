@@ -1,12 +1,12 @@
 # GoogleFontSpriteImageGenerator
 ==============================
 
-This project help generate sprite images for google font dropdown
+This project help generate sprite images for google font drawdown
 
 
 Install with: npm install googlefonts-sprite-generator
 
-This module uses phantomjs http://phantomjs.org/, make sure that is accessable in your path.
+This module was updated and now use's https://github.com/GoogleChrome/puppeteer insted of phantomJS
 
 And you will need API key https://developers.google.com/fonts/docs/developer_api#Auth
 
