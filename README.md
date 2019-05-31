@@ -1,16 +1,14 @@
 # GoogleFontSpriteImageGenerator
-==============================
 
-This project help generate sprite images for google font drawdown
+![Example image](https://raw.githubusercontent.com/pzagor2/GoogleFontSpriteImageGenerator/master/example.png)
 
+This project/module helps generate sprite image for google font drawdown.
 
-Install with: npm install googlefonts-sprite-generator
+## Google font api key
+You will need API key https://developers.google.com/fonts/docs/developer_api#Auth
 
-This module was updated and now use's https://github.com/GoogleChrome/puppeteer insted of phantomJS
-
-And you will need API key https://developers.google.com/fonts/docs/developer_api#Auth
-
-### Example usage
+## Example usage
+Install with: `npm install googlefonts-sprite-generator`
 
 ```javascript
 var generator = require("googlefonts-sprite-generator");
@@ -31,9 +29,3 @@ generator.getImage({
 	googleAPIKey:"" //You need to replace this with your api key
 });
 ```
-
-
-
-
-
-
