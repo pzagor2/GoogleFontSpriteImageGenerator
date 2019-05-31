@@ -38,14 +38,16 @@
 				$.get("https://www.googleapis.com/webfonts/v1/webfonts?key=<%= googleAPIKey %>", function(data) {
 					var familiesArray = [];
 					var loadedFontsArray = [];
+					var notLoadedFontsArray = [];
 					var loadingChunksFinished = false;
 
 
 					processLargeArrayAsync(data.items, function(item, index, array) {
 						console.log("Loading chunk: " + index);
 						$("#fonts").append("<li style='font-family:" + item.family + "'>" + item.family + "</li>");
-						familiesArray.push(item.family);
-						loadFonts([item.family]);
+						const key = item.family + ':' + item.variants[0];
+						familiesArray.push(key);
+						loadFonts([key]);
 					}, 100, window, function() {
 						console.log("fFnish loading chunks");
 						loadingChunksFinished = true;
@@ -68,7 +70,7 @@
 							},
 							fontinactive: function(param) {
 								console.log('Not loaded.... ' + param);
-								loadedFontsArray.push(param);
+								notLoadedFontsArray.push(param);
 								checkIfAllFontsAreLoaded();
 							}
 						});
@@ -78,8 +80,12 @@
 						if (!loadingChunksFinished) {
 							return;
 						}
-						if (loadedFontsArray.length === familiesArray.length) {
+						if (loadedFontsArray.length + notLoadedFontsArray.length === familiesArray.length) {
 							console.log('Number of handled fonts:' + loadedFontsArray.length);
+							console.log('Number of failed fonts:' + notLoadedFontsArray.length);
+							notLoadedFontsArray.forEach((v) => {
+								console.log('- ', v);
+							});
 							setTimeout(function () {
 								console.log('takeScreenshot');
 							}, 10000);
