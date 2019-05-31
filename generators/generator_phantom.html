@@ -45,7 +45,7 @@
 					processLargeArrayAsync(data.items, function(item, index, array) {
 						console.log("Loading chunk: " + index);
 						$("#fonts").append("<li style='font-family:" + item.family + "'>" + item.family + "</li>");
-						const key = item.family + ':' + item.variants[0];
+						const key = item.family + ':' + findBestVariant(item);
 						familiesArray.push(key);
 						loadFonts([key]);
 					}, 100, window, function() {
@@ -92,6 +92,15 @@
 						}
 					}
 
+					function findBestVariant(font) {
+						var variants = font.variants;
+
+						if (variants.includes('regular')) {
+							return 'regular';
+						}
+
+						return variants[0];
+					}
 					function processLargeArrayAsync(array, fn, chunk, context, finishCallbck) {
 						context = context || window;
 						chunk = chunk || 100;
