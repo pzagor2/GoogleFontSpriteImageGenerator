@@ -63,14 +63,14 @@
 							active: function() {
 								// console.log('active');
 							},
-							fontactive: function(param) {
-								console.log('Loaded.... ' + param);
-								loadedFontsArray.push(param);
+							fontactive: function() {
+								console.log('Loaded.... ' + fonts[0]);
+								loadedFontsArray.push(fonts[0]);
 								checkIfAllFontsAreLoaded();
 							},
-							fontinactive: function(param) {
-								console.log('Not loaded.... ' + param);
-								notLoadedFontsArray.push(param);
+							fontinactive: function() {
+								console.log('Not loaded.... ' + fonts[0]);
+								notLoadedFontsArray.push(fonts[0]);
 								checkIfAllFontsAreLoaded();
 							}
 						});
