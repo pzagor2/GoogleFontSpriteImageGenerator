@@ -45,7 +45,7 @@
 					processLargeArrayAsync(data.items, function(item, index, array) {
 						console.log("Loading chunk: " + index);
 						$("#fonts").append("<li style='font-family:" + item.family + "'>" + item.family + "</li>");
-						const key = item.family + ':' + findBestVariant(item);
+						var key = item.family + ':' + findBestVariant(item);
 						familiesArray.push(key);
 						loadFonts([key]);
 					}, 100, window, function() {
