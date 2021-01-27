@@ -22,7 +22,7 @@ generator.getImage({
 	},
 	port: 1224,
 	options: {
-		lineHeigth: "40px",
+		lineHeight: "40px",
 		fontSize: "25px",
 		width: "400px"
 	},
