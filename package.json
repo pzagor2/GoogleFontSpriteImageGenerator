@@ -25,5 +25,8 @@
     "sprite",
     "image"
   ],
-  "private": false
+  "private": false,
+  "devDependencies": {
+    "node-fetch": "^2.6.1"
+  }
 }
