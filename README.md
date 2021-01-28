@@ -7,7 +7,15 @@ This project/module helps generate sprite image for google font drawdown.
 ## Google font api key
 You will need API key https://developers.google.com/fonts/docs/developer_api#Auth
 
-## Example usage
+## Example usage in console
+`git clone` this repo.
+
+```bash
+$ cd GoogleFontSpriteImageGenerator
+$ GOOGLE_API_KEY=xxxxx node cli.js
+```
+
+## Example usage in JavaScript
 Install with: `npm install googlefonts-sprite-generator`
 
 ```javascript
